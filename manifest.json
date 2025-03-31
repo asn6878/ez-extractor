@@ -1,0 +1,15 @@
+{
+    "manifest_version": 3,
+    "name": "이미지 추출 확장프로그램",
+    "version": "1.0",
+    "description": "현재 페이지에 존재하는 이미지들을 추출 합니다.",
+    "permissions": [
+      "activeTab",
+      "scripting"
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_title": "이미지 추출기"
+    }
+  }
+  
