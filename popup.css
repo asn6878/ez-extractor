@@ -1,11 +1,17 @@
+/* body는 고정된 픽셀 대신 창 너비에 맞춰 100%로 확장되고, box-sizing을 통해 패딩 포함 */
 body {
   font-family: Arial, sans-serif;
-  width: 300px;
+  width: 100%;
+  height: 100%;
   padding: 15px;
   background-color: #fff;
   margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
+/* 버튼은 여전히 컨테이너의 100% 너비를 사용 */
 button {
   width: 100%;
   padding: 10px;
@@ -16,12 +22,14 @@ button {
   border-radius: 4px;
   color: #fff;
   transition: background-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 button:hover {
   background-color: #2daa9e;
 }
 
+/* 로더 영역 */
 #loader {
   display: flex;
   flex-direction: column;
@@ -48,25 +56,28 @@ button:hover {
   display: none;
 }
 
+/* 결과 영역은 고정된 최대 높이 없이 창 크기에 맞춰 유동적으로 확장 */
 #result {
   margin-top: 10px;
-  max-height: 300px;
+  flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
+/* 스크롤바 스타일 (선택사항) */
 #result::-webkit-scrollbar {
   width: 8px;
 }
 #result::-webkit-scrollbar-track {
-  background: #eaeaea; /* 여백 Color */
+  background: #eaeaea;
   border-radius: 4px;
 }
 #result::-webkit-scrollbar-thumb {
-  background-color: #66d2ce; /* Primary Color */
+  background-color: #66d2ce;
   border-radius: 4px;
 }
 
+/* 이미지 항목 스타일 */
 .img-item {
   display: flex;
   align-items: center;
@@ -90,6 +101,7 @@ button:hover {
   font-size: 14px;
 }
 
+/* 버튼 상단 여백 */
 #extractBtn {
   margin-bottom: 10px;
 }
