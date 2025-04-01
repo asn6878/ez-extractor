@@ -3,18 +3,21 @@ document.getElementById("extractBtn").addEventListener("click", async () => {
   const loader = document.getElementById("loader");
   loader.classList.remove("hidden");
 
-  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const urlParams = new URLSearchParams(window.location.search);
+  const targetTabId = Number(urlParams.get("targetTabId")); // 문자열을 숫자로 변환
 
+  // 먼저 common.js를 주입하여 extractImages를 페이지에 등록합니다.
   chrome.scripting.executeScript(
     {
-      target: { tabId: tab.id },
+      target: { tabId: targetTabId },
       files: ["common.js"],
     },
     () => {
+      // common.js 주입 후 extractImages를 호출합니다.
       chrome.scripting.executeScript(
         {
-          target: { tabId: tab.id },
-          func: () => window.extractImages(),
+          target: { tabId: targetTabId },
+          func: () => window.extractImages(), // window.extractImages 호출
         },
         (results) => {
           loader.classList.add("hidden");
@@ -51,17 +54,20 @@ document
     const loader = document.getElementById("loader");
     loader.classList.remove("hidden");
 
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetTabId = Number(urlParams.get("targetTabId")); // 문자열을 숫자로 변환
 
+    // 먼저 common.js를 주입하여 extractImages를 페이지에 등록합니다.
     chrome.scripting.executeScript(
       {
-        target: { tabId: tab.id },
+        target: { tabId: targetTabId },
         files: ["common.js"],
       },
       () => {
+        // common.js 주입 후 onMouseMove, onClick 이벤트를 포함한 로직을 실행합니다.
         chrome.scripting.executeScript(
           {
-            target: { tabId: tab.id },
+            target: { tabId: targetTabId },
             func: function () {
               return new Promise((resolve) => {
                 const highlight = document.createElement("div");
@@ -95,15 +101,19 @@ document
                   event.preventDefault();
                   event.stopPropagation();
 
+                  // 오버레이 제거
                   overlay.remove();
 
+                  // 시작 클릭 이벤트 리스너 제거
                   document.removeEventListener("click", startOnClick, true);
 
+                  // 요소 선택을 위한 이벤트 리스너 등록
                   document.addEventListener("mousemove", onMouseMove);
                   document.addEventListener("click", onClick, true);
                   document.addEventListener("keydown", onKeyDown);
                 }
 
+                // 최초 클릭 이벤트 리스너 등록
                 document.addEventListener("click", startOnClick, true);
 
                 function onMouseMove(event) {
