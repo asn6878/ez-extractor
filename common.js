@@ -1,4 +1,3 @@
-// common.js
 window.extractImages = function (container) {
   let root;
   if (arguments.length > 0 && container instanceof Element) {
